@@ -97,9 +97,9 @@ class ArrayListTest {
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
         Object initialArray = arrayList.getBackingArray();
         Integer initialCapacity = Array.getLength(arrayList.getBackingArray());
-
-        for (int i = 0; i <= 9; i++){
-            arrayList.addToFront(9 - i);
+        int targetCapacity = 9 * 2 * 2 * 2;
+        for (int i = 0; i < targetCapacity; i++){
+            arrayList.addToFront(targetCapacity - i);
         }
 
         Object currentArray = arrayList.getBackingArray();
@@ -107,7 +107,7 @@ class ArrayListTest {
 
         Integer currentCapacity = Array.getLength(arrayList.getBackingArray());
         assertNotEquals(initialCapacity, currentCapacity);
-        assertEquals(currentCapacity, initialCapacity * 2);
+        assertEquals(currentCapacity, targetCapacity);
     }
 
     @org.junit.jupiter.api.Test
@@ -192,11 +192,12 @@ class ArrayListTest {
 
     @org.junit.jupiter.api.Test
     void addToBack_resizes(){
-        ArrayList<Integer> arrayList = new ArrayList<Integer>();
+        ArrayList<Integer> arrayList = new ArrayList<>();
         Object initialArray = arrayList.getBackingArray();
         Integer initialCapacity = Array.getLength(arrayList.getBackingArray());
+        int targetCapacity = 9 * 2 * 2 * 2;
 
-        for (int i = 0; i <= 9; i++){
+        for (int i = 0; i < targetCapacity; i++){
             arrayList.addToBack(i);
         }
 
@@ -205,7 +206,7 @@ class ArrayListTest {
 
         Integer currentCapacity = Array.getLength(arrayList.getBackingArray());
         assertNotEquals(initialCapacity, currentCapacity);
-        assertEquals(currentCapacity, initialCapacity * 2);
+        assertEquals(currentCapacity, targetCapacity);
     }
 
     @org.junit.jupiter.api.Test
@@ -229,6 +230,9 @@ class ArrayListTest {
         Integer currentSize = arrayList.size();
         assertNotEquals(initialSize, currentSize);
         assertEquals(addedValue, removedValue);
+
+        Object valueAt0 = Array.get(arrayList.getBackingArray(), 0);
+        assertNull(valueAt0);
     }
 
     @org.junit.jupiter.api.Test
@@ -248,6 +252,9 @@ class ArrayListTest {
 
         Object valueAt0 = Array.get(arrayList.getBackingArray(), 0);
         assertEquals(addedVal1, valueAt0);
+
+        Object valueAt1 = Array.get(arrayList.getBackingArray(), 1);
+        assertNull(valueAt1);
     }
 
     @org.junit.jupiter.api.Test
@@ -272,13 +279,15 @@ class ArrayListTest {
 
         Object valueAt1 = Array.get(arrayList.getBackingArray(), 1);
         assertEquals(addedVal2, valueAt1);
+
+        Object valueAt2 = Array.get(arrayList.getBackingArray(), 2);
+        assertNull(valueAt2);
     }
 
     @org.junit.jupiter.api.Test
     void removeFromFront_n() {
         ArrayList<Integer> arrayList = new ArrayList<>();
-
-        Integer n = 16;
+        int n = 16;
         int[] inputs = new int[n];
         for (int i = 0; i < n; i++) {
             inputs[i] = i;
@@ -297,6 +306,9 @@ class ArrayListTest {
             Object arrayValue = Array.get(arrayList.getBackingArray(), i);
             assertEquals(inputValue + 1, arrayValue);
         }
+
+        Object lastValue = Array.get(arrayList.getBackingArray(), n - 1);
+        assertNull(lastValue);
     }
 
     @org.junit.jupiter.api.Test

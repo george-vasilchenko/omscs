@@ -44,7 +44,7 @@ public class ArrayList<T> {
             throw new IllegalArgumentException ("Parameter 'data' must not be null.");
         }
         
-        if(size == INITIAL_CAPACITY){
+        if(size == backingArray.length){
             resize();
         }
 
@@ -80,7 +80,7 @@ public class ArrayList<T> {
             throw new IllegalArgumentException ("Parameter 'data' must not be null.");
         }
 
-        if(size == INITIAL_CAPACITY){
+        if(size == backingArray.length){
             resize();
         }
 
@@ -110,6 +110,7 @@ public class ArrayList<T> {
             backingArray[i - 1] = backingArray[i];
         }
 
+        backingArray[size - 1] = null;
         size--;
 
         return result;
@@ -167,10 +168,8 @@ public class ArrayList<T> {
      * Resizes the array. Doubles its size.
      */
     private void resize(){
-        int currentCapacity = backingArray.length;
-        int targetCapacity = currentCapacity * 2;
-
-        T[] newArray = (T[]) new Object[targetCapacity];
+        int capacity = backingArray.length * 2;
+        T[] newArray = (T[]) new Object[capacity];
 
         for (int i = 0; i < backingArray.length; i++){
             newArray[i] = backingArray[i];
